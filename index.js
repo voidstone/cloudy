@@ -1,12 +1,15 @@
 const { readFileSync, writeFileSync } = require('fs')
 
+const [INPUT_FILE, OUTPUT_FILE] = process.argv.slice(2);
 
-const INPUT_FILE = './test.html'
-const OUTPUT_FILE = './output.html'
+try {
+    const file = readFileSync(INPUT_FILE, 'utf8')
 
+    writeFileSync(OUTPUT_FILE, file);
 
-const file = readFileSync(INPUT_FILE, 'utf8')
+} catch (e) {
+    console.error(e.message);
 
-writeFileSync(OUTPUT_FILE, file);
+    process.exit(1);
+}
 
-console.log(file);
