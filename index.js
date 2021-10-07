@@ -19,7 +19,9 @@ try {
 
     writeFileSync(OUTPUT_FILE, file);
 
-    console.log(`Copied ${fileSize} from ${INPUT_FILE} to ${OUTPUT_FILE}`);
+    if (process.argv.includes('-v')) {
+        console.log(`Copied ${fileSize} from ${INPUT_FILE} -> ${OUTPUT_FILE}`);
+    }
 
 } catch (e) {
     console.error(e.message);
