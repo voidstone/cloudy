@@ -1,18 +1,22 @@
-const { copyFileSync, statSync } = require('fs')
+const { createReadStream, createWriteStream } = require('fs')
 
 const [INPUT_FILE, OUTPUT_FILE] = process.argv.slice(2);
 
+const readStream = createReadStream(INPUT_FILE);
+const writeStream = createWriteStream(OUTPUT_FILE);
 
-try {
-    copyFileSync(INPUT_FILE, OUTPUT_FILE);
+readStream
+    .on('data', (chunk) => {
+        writeStream.write(chunk);
+    })
+    .on('end', () => {
+        if (process.argv.includes('-v')) {
+            console.log(` ${INPUT_FILE} -> ${OUTPUT_FILE}`);
+        }
+        writeStream.end()
+    })
+    .on('error', (e) => {
+        console.error(e.message);
 
-    if (process.argv.includes('-v')) {
-        console.log(` ${INPUT_FILE} -> ${OUTPUT_FILE}`);
-    }
-
-} catch (e) {
-    console.error(e.message);
-
-    process.exit(1);
-}
-
+        process.exit(1);
+    });
