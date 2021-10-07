@@ -1,11 +1,13 @@
 const { createReadStream, createWriteStream } = require('fs')
+const { createGzip } = require('zlib')
 
 const [INPUT_FILE, OUTPUT_FILE] = process.argv.slice(2);
 
 const readStream = createReadStream(INPUT_FILE);
 const writeStream = createWriteStream(OUTPUT_FILE);
+const compressStream = createGzip();
 
-readStream
+readStream.pipe(compressStream)
     .on('data', (chunk) => {
         writeStream.write(chunk);
     })
