@@ -2,10 +2,10 @@ const { createReadStream } = require('fs');
 const { request } = require('http');
 const { createGzip } = require('zlib')
 
-const [INPUT_FILE, OUTPUT_FILE] = process.argv.slice(2);
+const [INPUT_FILE, OUTPUT_FILE, HOST] = process.argv.slice(2);
 
 const readStream = createReadStream(INPUT_FILE);
-const writeStream = request("http://localhost:4000/upload", {
+const writeStream = request(HOST, {
     method: 'POST',
     headers: { 'file-path': OUTPUT_FILE }
 })
