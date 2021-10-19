@@ -2,9 +2,7 @@ const { createServer } = require('http');
 const { createReadStream, createWriteStream } = require('fs')
 const { join } = require('path');
 
-const { C_LOGIN, C_PASS, C_PORT } = process.env || { C_LOGIN = 'hello', C_PASS = 'pass', C_PORT =4000 };
-
-
+const { C_LOGIN, C_PASS, C_PORT } = process.env || { C_LOGIN: 'hello', C_PASS: 'pass', C_PORT: 4000 };
 const unifiedCredentials = `${C_LOGIN}:${C_PASS}`;
 const base64Credentials = Buffer.from(unifiedCredentials).toString('base64');
 const expectedAuthHeader = `Basic ${base64Credentials}`;
